@@ -19,6 +19,10 @@ function getLocations() {
     return fetch(url).then(response => response.json());
 }
 
+function deleteLocations() {
+    baseLocations = baseLocations.filter(loca => loca.selected === false);
+}
+
 function sortlocations(a, b) {
     let result;
     if (sortingOrder === 'asc') {
@@ -61,14 +65,11 @@ function getSortedLocations(sortingType) {
     }
     return baseLocations.slice().sort(sortlocations);
 }
-function checkDeleteButton() {
-    const removeButton = remove;
-    const checked = document.querySelectorAll('tbody input:checked');
-    if (checked.length > 0) {
-        removeButton.removeAttribute('disabled');
-    } else {
-        removeButton.setAttribute('disabled', '');
-    }
+
+function renderLocations() {
+    const sortingType = sorting.value;
+    const sortedLocations = getSortedLocations(sortingType);
+    renderTableBody(sortedLocations);
 }
 
 function setLocationSelection() {
@@ -76,8 +77,7 @@ function setLocationSelection() {
     const locationId = Number(this.parentNode.parentNode.dataset.id);
     // debugger;
     baseLocations.find(loca => loca.id === locationId).selected = value;
-    const sortedLocations = getSortedLocations(sorting.value);
-    renderTableBody(sortedLocations);
+    renderLocations();
 }
 
 function tableSearch() {
@@ -98,6 +98,17 @@ function tableSearch() {
         }
     }
 }
+
+function checkDeleteButton() {
+    const removeButton = remove;
+    const checked = document.querySelectorAll('tbody input:checked');
+    if (checked.length > 0) {
+        removeButton.removeAttribute('disabled');
+    } else {
+        removeButton.setAttribute('disabled', '');
+    }
+}
+
 
 function renderTableRow(location, tbody) {
     let row = tbody.insertRow();
@@ -134,22 +145,42 @@ function renderTableBody(locations) {
         });
 }
 
+function openModal() {
+    const modal = document.querySelector('#modal')
+    modal.style.display = 'flex';
+}
+
+function closeModal() {
+    document.querySelector('#modal').style.display = 'none';
+}
 function onDomReady() {
-    getLocations()
-        .then(json => {
-            baseLocations = json.map(loca => {
-                return new Location(loca.country, loca.city);
-            });
-            renderTableBody(baseLocations);
-        });
+    getLocations().then(json => {
+        baseLocations = json.map(loca => new Location(loca.country, loca.city));
+        renderTableBody(baseLocations);
+    });
 
     sorting.addEventListener('change', e => {
-        const sortingType = e.target.value;
-        const sortedLocations = getSortedLocations(sortingType);
-        renderTableBody(sortedLocations);
+        renderLocations();
     });
 
     search.addEventListener('keyup', tableSearch);
+
+    add.addEventListener('click', openModal);
+
+    remove.addEventListener('click', () => {
+        deleteLocations();
+        renderLocations();
+    });
+    
+    document.querySelector('#modal-ok').addEventListener('click', () => {
+        addLocation();
+        closeModal();
+    });
+    
+    document.querySelector('#modal-cancel').addEventListener('click', closeModal);
 }
 
 document.addEventListener('DOMContentLoaded', onDomReady);
+
+
+
