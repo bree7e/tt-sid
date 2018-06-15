@@ -19,6 +19,13 @@ function getLocations() {
     return fetch(url).then(response => response.json());
 }
 
+function addLocation() {
+    const country = document.querySelector('#modal-country').value;
+    const city = document.querySelector('#modal-city').value;
+    baseLocations.push(new Location(country, city));
+    renderLocations();
+}
+
 function deleteLocations() {
     baseLocations = baseLocations.filter(loca => loca.selected === false);
 }
@@ -109,7 +116,6 @@ function checkDeleteButton() {
     }
 }
 
-
 function renderTableRow(location, tbody) {
     let row = tbody.insertRow();
     row.setAttribute('data-id', location.id);
@@ -146,7 +152,9 @@ function renderTableBody(locations) {
 }
 
 function openModal() {
-    const modal = document.querySelector('#modal')
+    const modal = document.querySelector('#modal');
+    document.querySelector('#modal-country').value = '';
+    document.querySelector('#modal-city').value = '';
     modal.style.display = 'flex';
 }
 
@@ -171,16 +179,15 @@ function onDomReady() {
         deleteLocations();
         renderLocations();
     });
-    
+
     document.querySelector('#modal-ok').addEventListener('click', () => {
         addLocation();
         closeModal();
     });
-    
-    document.querySelector('#modal-cancel').addEventListener('click', closeModal);
+
+    document
+        .querySelector('#modal-cancel')
+        .addEventListener('click', closeModal);
 }
 
 document.addEventListener('DOMContentLoaded', onDomReady);
-
-
-
