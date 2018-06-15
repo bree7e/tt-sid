@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DIS Group Test</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+
+        main {
+            margin: 32px 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 32px;
+        }
+
+        .toolbar {
+            display: flex;
+        }
+
+        .toolbar__search {
+            padding: 8px;
+            margin-left: auto;
+        }
+
+        .button {
+            padding: 8px;
+            margin-left: 8px;
+        }
+
+        .table {
+            width: 100%;
+        }
+
+        .table td,
+        .table th {
+            padding: 4px;
+        }
+
+        .table tr:hover {
+            background-color: lightgray;
+        }
+
+        .modal {
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal__background {
+            position: fixed;
+            z-index: 20;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgb(0, 0, 0);
+            transition: opacity 400ms ease-in;
+            opacity: .5;
+        }
+
+        .modal__content {
+            z-index: 30;
+            background-color: #fff;
+            width: 300px;
+            border-radius: 4px;
+            padding: 16px;
+        }
+
+        .modal__control {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 8px;
+        }
+
+        .modal__control-input {
+            padding: 8px;
+        }
+
+        .modal__footer {
+            margin-top: 16px;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Country List</h1>
+            <div class="toolbar">
+                <select class="toolbar__sorting">
+                    <option value="no-sorting" selected>No sorting</option>
+                    <option value="country-asc">Country ASC</option>
+                    <option value="country-desc">Country DESC</option>
+                    <option value="city-asc">City ASC</option>
+                    <option value="city-desc">City DESC</option>
+                </select>
+                <button class="button" id="add">Add</button>
+                <button class="button" id="remove" disabled>Remove</button>
+                <input class="toolbar__search" id="search" type="text" placeholder="Find city...">
+            </div>
+        </header>
+        <main>
+            <table class="table">
+                <thead>
+                    <th style="text-align: left">
+                        <input type="checkbox">
+                    </th>
+                    <th>Country</th>
+                    <th>City</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                        <td>Afghanistan</td>
+                        <td>Kabul</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                        <td>Argentina</td>
+                        <td>Buenos Aires</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                        <td>Austria</td>
+                        <td>Wien</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                        <td>England</td>
+                        <td>London</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                        <td>France</td>
+                        <td>Paris</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                        <td>USA</td>
+                        <td>Washington</td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+        <div id="modal" class="modal" style="display: none">
+            <div class="modal__background"></div>
+            <form class="modal__content">
+                <div class="modal__body">
+                    <div class="modal__control">
+                        <label class="modal__control-label" for="modal-country">Country</label>
+                        <input class="modal__control-input" type="text" id="modal-country">
+                    </div>
+                    <div class="modal__control">
+                        <label class="modal__control-label" for="modal-city">City</label>
+                        <input class="modal__control-input" type="text" id="modal-city">
+                    </div>
+                </div>
+                <div class="modal__footer">
+                    <button class="button">Ok</button>
+                    <button class="button">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

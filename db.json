@@ -1,0 +1,17 @@
+{
+    "locations": [
+        { "country": "Afghanistan", "city": "Kabul" },
+        { "country": "Argentina", "city": "Buenos Aires" },
+        { "country": "Australia", "city": "Canberra" },
+        { "country": "Austria", "city": "Wien" },
+        { "country": "Chile", "city": "Santiago de Chile" },
+        { "country": "China", "city": "Peking" },
+        { "country": "Cuba", "city": "La Habana" },
+        { "country": "Cyprus", "city": "Nicosia" },
+        { "country": "Czech Republic", "city": "Praha" },
+        { "country": "England", "city": "London" },
+        { "country": "France", "city": "Paris" },
+        { "country": "Russian Federation", "city": "Moscow" },
+        { "country": "United States", "city": "Washington" }
+    ]
+}

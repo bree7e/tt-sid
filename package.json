@@ -1,0 +1,15 @@
+{
+  "name": "tt-sid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node .\\node_modules\\json-server\\bin .\\db.json"
+  },
+  "author": "Alexandr A. Vetrov",
+  "license": "MIT",
+  "devDependencies": {
+    "json-server": "^0.14.0"
+  }
+}
