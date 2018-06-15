@@ -37,7 +37,11 @@ main {
 }
 
 .table tr:hover {
-    background-color: lightgray;
+    background-color: lightblue;
+}
+
+.selected {
+    background-color: gold;
 }
 
 .modal {
