@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DIS Group Test</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Country List</h1>
+            <div class="toolbar">
+                <select id="sorting" class="toolbar__sorting">
+                    <option value="no-sorting" selected>No sorting</option>
+                    <option value="country-asc">Country ASC</option>
+                    <option value="country-desc">Country DESC</option>
+                    <option value="city-asc">City ASC</option>
+                    <option value="city-desc">City DESC</option>
+                </select>
+                <button class="button" id="add">Add</button>
+                <button class="button" id="remove" disabled>Remove</button>
+                <input class="toolbar__search" id="search" type="text" placeholder="Find city...">
+            </div>
+        </header>
+        <main>
+            <table id="table" class="table">
+                <thead>
+                    <th></th>
+                    <th>Country</th>
+                    <th>City</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                        <td>Afghanistan</td>
+                        <td>Kabul</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                        <td>Argentina</td>
+                        <td>Buenos Aires</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                        <td>Austria</td>
+                        <td>Wien</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                        <td>England</td>
+                        <td>London</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                        <td>France</td>
+                        <td>Paris</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                        <td>USA</td>
+                        <td>Washington</td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+        <div id="modal" class="modal" style="display: none">
+            <div class="modal__background"></div>
+            <form class="modal__content">
+                <div class="modal__body">
+                    <div class="modal__control">
+                        <label class="modal__control-label" for="modal-country">Country</label>
+                        <input class="modal__control-input" type="text" id="modal-country">
+                    </div>
+                    <div class="modal__control">
+                        <label class="modal__control-label" for="modal-city">City</label>
+                        <input class="modal__control-input" type="text" id="modal-city">
+                    </div>
+                </div>
+                <div class="modal__footer">
+                    <button class="button">Ok</button>
+                    <button class="button">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="dist/main.js"></script>
+</body>
+
+</html>
