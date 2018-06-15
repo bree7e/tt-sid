@@ -36,22 +36,42 @@ function tableSearch() {
     }
 }
 
-function renderTableRow() {
-    //
+function renderTableRow(location, tbody) {
+    let row = tbody.insertRow();
+
+    const checkbox = document.createElement('input');
+    checkbox.type = "checkbox";
+    const checkboxCell = row.insertCell();
+    checkboxCell.appendChild(checkbox);
+    const countryCell = row.insertCell();
+    countryCell.appendChild(document.createTextNode(location.country));
+    const cityCell = row.insertCell();
+    cityCell.appendChild(document.createTextNode(location.city));
 }
 
-function renderTableBody() {
+function renderTableBody(locations) {
+    let tbody = document.querySelector('#table tbody');
+    while (tbody.firstChild) {
+        tbody.removeChild(tbody.firstChild);
+    }
     locations.forEach(loca => {
-        renderTableRow(loca);
+        renderTableRow(loca, tbody);
     });
-    //
 }
 
 function onDomReady() {
-    getLocations().then(json => {
-        locations = json;
-        console.log(json);
-    });
+    getLocations()
+        .then(json => {
+            locations = json;
+            renderTableBody(locations);
+        })
+        .then(() => {
+            document
+                .querySelectorAll('table input[type="checkbox"]')
+                .forEach(function(checkbox) {
+                    checkbox.addEventListener('input', checkDeleteButton);
+                });
+        });
 
     sorting.addEventListener('change', e => {
         const sortingType = e.target.value;
@@ -74,19 +94,6 @@ function onDomReady() {
 
     search.addEventListener('keyup', tableSearch);
 
-    document
-        .querySelectorAll('table input[type="checkbox"]')
-        .forEach(function(checkbox) {
-            checkbox.addEventListener('input', checkDeleteButton);
-        });
-
-    // document.querySelector('thead input').addEventListener('input', function() {
-    //     const tbodyCheckboxes = document.querySelectorAll('tbody input[type="checkbox"]');
-    //     const thisCheckboxValue = this.checked;
-    //     tbodyCheckboxes.forEach(checkbox => {
-    //         checkbox.checked = thisCheckboxValue;
-    //     });
-    // });
 }
 
 document.addEventListener('DOMContentLoaded', onDomReady);
