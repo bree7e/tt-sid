@@ -1,6 +1,20 @@
 'use strict';
 
-let locations;
+let baseLocations;
+let sortingField;
+let sortingOrder = 'asc';
+
+class Location {
+    constructor(country, city) {
+        this.country = country;
+        this.city = city;
+        this.selected = false;
+    }
+
+    setSelected(value) {
+        this.selected = value;
+    }
+}
 
 function getLocations() {
     const url = 'http://localhost:3000/locations';
@@ -38,9 +52,10 @@ function tableSearch() {
 
 function renderTableRow(location, tbody) {
     let row = tbody.insertRow();
-
+    row.setAttribute('data-id', location.id);
+    // debugger;
     const checkbox = document.createElement('input');
-    checkbox.type = "checkbox";
+    checkbox.type = 'checkbox';
     const checkboxCell = row.insertCell();
     checkboxCell.appendChild(checkbox);
     const countryCell = row.insertCell();
@@ -62,8 +77,12 @@ function renderTableBody(locations) {
 function onDomReady() {
     getLocations()
         .then(json => {
-            locations = json;
-            renderTableBody(locations);
+            baseLocations = json;
+            let id = 0;
+            baseLocations.forEach(loca => {
+                loca.id = id++;
+            });
+            renderTableBody(baseLocations);
         })
         .then(() => {
             document
@@ -73,27 +92,56 @@ function onDomReady() {
                 });
         });
 
-    sorting.addEventListener('change', e => {
-        const sortingType = e.target.value;
+    function sortlocations(a, b) {
+        let result;
+        if (sortingOrder === 'asc') {
+            result = 1;
+        } else if (sortingOrder === 'desc') {
+            result = -1;
+        } else {
+            throw new Error('Unsupported sorting order');
+        }
+        if (a[sortingField] > b[sortingField]) {
+            return result;
+        }
+        if (a[sortingField] < b[sortingField]) {
+            return -result;
+        }
+        return 0;
+    }
+    function getSortedLocations(sortingType) {
         switch (sortingType) {
             case 'no-sorting':
-            // break;
+                return baseLocations;
             case 'country-asc':
-            // break;
+                sortingField = 'country';
+                sortingOrder = 'asc';
+                break;
             case 'country-desc':
-            // break;
+                sortingField = 'country';
+                sortingOrder = 'desc';
+                break;
             case 'city-asc':
-            // break;
+                sortingField = 'city';
+                sortingOrder = 'asc';
+                break;
             case 'city-desc':
-                console.log(sortingType);
+                sortingField = 'city';
+                sortingOrder = 'desc';
                 break;
             default:
                 throw new Error('Unsupported sorting type');
-        }
+            }
+        return baseLocations.slice().sort(sortlocations);
+    }
+
+    sorting.addEventListener('change', e => {
+        const sortingType = e.target.value;
+        const sortedLocations = getSortedLocations(sortingType);
+        renderTableBody(sortedLocations);
     });
 
     search.addEventListener('keyup', tableSearch);
-
 }
 
 document.addEventListener('DOMContentLoaded', onDomReady);
